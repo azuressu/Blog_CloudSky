@@ -286,7 +286,8 @@
                     window.location.href = host;
                 })
                 .fail(function (jqXHR, textStatus) {
-                    swal('로그인 실패!','warning');
+                    // swal('로그인 실패!','warning');
+                    alert("로그인 실패");
                     window.location.href = host + '/dev/user/login-page?error'
                 });
         }

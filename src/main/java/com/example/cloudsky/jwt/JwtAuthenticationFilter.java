@@ -53,16 +53,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
     }
 
-    public void deleteAuthentication(HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
-        log.info("로그아웃 시도");
-        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
-
-        String token = jwtUtil.createToken(username);
-        jwtUtil.deleteCookie(token, response);
-        response.sendRedirect("/dev/user/login-page"); // "/"로 리다이렉트
-    }
-
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
         response.setStatus(401);
