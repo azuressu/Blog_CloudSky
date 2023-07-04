@@ -2,10 +2,12 @@ package com.example.cloudsky.dto;
 
 import com.example.cloudsky.entity.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class PostResponseDto {
 
     private Long id;

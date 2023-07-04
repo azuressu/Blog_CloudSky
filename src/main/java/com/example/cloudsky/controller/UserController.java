@@ -4,8 +4,6 @@ import com.example.cloudsky.dto.ApiResponseDto;
 import com.example.cloudsky.dto.SignupRequestDto;
 import com.example.cloudsky.jwt.JwtAuthenticationFilter;
 import com.example.cloudsky.service.UserService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,35 +29,11 @@ public class UserController {
     private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    // 로그인 페이지
-    @GetMapping("/login-page")
-    public String loginPage() {
-        return "login";
-    }
+    // 회원가입
+//    @PostMapping("/signup")
+//    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) {
+//        userService.signup(requestDto);
+//        return ResponseEntity.status(201).body(new ApiResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
+//    }
 
-    @GetMapping("/signup")
-    public String signupPage() {
-        return "signup";
-    }
-
-    @PostMapping("/signup")
-    public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
-        // Validation 예외처리
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if (fieldErrors.size()>0) {
-            for (FieldError fieldError: bindingResult.getFieldErrors()) {
-                log.error(fieldError.getField() + "필드: "+fieldError.getDefaultMessage());
-            }
-            return "redirect:/dev/user/signup";
-        }
-        userService.signup(requestDto);
-
-        return  "redirect:/dev/user/login-page";
-    }
-
-    @RequestMapping("/logout")
-    public ResponseEntity<ApiResponseDto> logout(HttpServletResponse response, Authentication authResult) throws ServletException, IOException {
-        jwtAuthenticationFilter.deleteAuthentication(response, authResult);
-        return ResponseEntity.status(201).body(new ApiResponseDto("로그아웃 성공", HttpStatus.CREATED.value()));
-    }
 }
