@@ -45,14 +45,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("로그인 성공 및 JWT 생성");
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-        String token = jwtUtil.createToken(username);
-        jwtUtil.addJwtToCookie(token, response);
-        response.sendRedirect("/"); // "/"로 리다이렉트
+        String token = jwtUtil.createToken(username, role);
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
     }
 
     public void deleteAuthentication(HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
@@ -66,9 +64,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info("로그인 실패");
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
         response.setStatus(401);
+        // 협업할 때, 클라이언트 쪽에 추가적이 메세지 라던가 데이터를 넘겨주세요 라고 한다면
+        // 여기서 status만 설정하는 것이 아니라
+        // response 객체, content-type 그리고 메세지 등을 담아서 보낼 수도 있음
+    }
+
+    public void deleteAuthentication(HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+        log.info("로그아웃 시도");
+        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
+        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
+
+        String token = jwtUtil.createToken(username, role);
+        jwtUtil.deleteCookie(token, response);
+        response.sendRedirect("/dev/user/login-page"); // "/"로 리다이렉트
     }
 }
 // 여기는 보시는 대로 로그인 한 유저의 토큰을 생성하는 파일입니다.

@@ -136,14 +136,14 @@
     }
 
     .logoutbtn {
-      width: 66%;
+      width: 60%;
       height: 15%;
       margin-top: 10px auto 0px;
       align-items: center;
       display: flex;
       justify-items: center;
       text-align: right;
-      justify-content: flex-end;
+      justify-content: space-between;
     }
 
     .header{
@@ -238,6 +238,10 @@
       text-align: center;
     }
 
+    .row {
+      width: 60%;
+    }
+
     .bottom {
       margin-top: 0;
       width: 100%;
@@ -286,8 +290,27 @@
       width: 100%;
     }
 
-    card-body {
-      border: 1px solid #000;
+    .card{
+      width: 100%;
+      min-height: 10px;
+      height: 85%;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      color: #000
+    }
+
+    .card-body{
+      padding: 15px;
+    }
+
+    h3{
+      margin:0;
     }
   </style>
 </head>
@@ -304,7 +327,7 @@
   <div class="cloud cloud3"></div>
   <div class="cloud cloud4"></div>
   <div class="cloud cloud5"></div>
-  <div><h1 class="title1" >Cloud Sky</h1></div>
+  <div><h1 class="title1">Cloud Sky</h1></div>
   <div><h4 class="title2"><span>☁</span> 환영합니다 <span>☁</span></h4></div>
 </div>
 
@@ -312,26 +335,30 @@
 
 <div class="bottom">
   <div class = "logoutbtn">
-    <button type="button" id="create-btn"
-            th:onclick="|location.href='@{/new-post}'|"
-            class="btn btn-secondary btn-sm mb-3">글 등록</button>
+
+    <div style="float: left;">
+      <button type="button" id="create-btn" th:onclick="|location.href='/dev/newpost'|"
+              class="btn btn-secondary btn-sm mb-3">글 등록</button>
+    </div>
+    <div style="float: right;">
+      <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
+    </div>
+
   </div>
-  <div class="row-6" th:each="posts : ${post}">
+  <div class="row" th:each="post : ${posts}">
     <div class="card">
-      <div class="card-header" th:text="${posts.id}">
+      <div class="card-header" > <!--th:text="${post.id}"-->
       </div>
       <div class="card-body">
-        <h3 class="card-title" th:text="${posts.title}">title</h3>
-        <p class="card-text" th:text="${posts.username}">username</p>
-        <button th:href="@{/dev/post/{id}(id=${post.id})}" class="btn btn-primary">보러가기</button>
+        <h3 class="card-title" th:text="${post.title}">title</h3>
+        <p class="card-text" th:text="${post.username}">username</p>
+        <!--        th:onclick="|location.href='@{/newpost?id={postId}(postId=${post.id})}'|"-->
+        <!--        th:href="@{/dev/post/{id}(id=${post.id})}" -->
+        <button th:onclick="|location.href='/dev/post/' + ${post.id}|" class="btn btn-primary">보러가기</button>
       </div>
     </div>
     <br>
-
-    <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
   </div>
 
-
-</div>
 </body>
 </html>

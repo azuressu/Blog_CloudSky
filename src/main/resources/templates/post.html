@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Cloud Sky</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         * {
             font-family: "Poppins", sans-serif;
         }
 
-
-        html, body{
+        html,
+        body {
             width: 100%;
-            height:  100%;
+            height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -47,7 +49,7 @@
             justify-content: flex-end;
         }
 
-        .header{
+        .header {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -60,7 +62,7 @@
         }
 
         .line {
-            margin:0;
+            margin: 0;
             width: 100%;
             height: 0.5%;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -73,26 +75,21 @@
             0% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
         }
-        /*
-                .cloud {
-                    position: absolute;
-                    width: 50%;
-                    height: 6%;
-                    border-radius: 100px;
-                    background-color: #ECF9FF;
-                    opacity: 0.8;
-                    animation: floatClouds 10s infinite linear;
-                } */
 
+        /*.cloud {position: absolute;width: 50%;height: 6%;border-radius: 100px;background-color: #ECF9FF;opacity: 0.8;animation: floatClouds 10s infinite linear;} */
         @keyframes floatClouds {
-            0% , 100%{
+
+            0%,
+            100% {
                 transform: translateX(-50px);
             }
 
@@ -102,18 +99,37 @@
         }
 
         /* Apply cloud animation to multiple clouds */
-        .cloud1 { top: 35px; left: 10%; }
-        .cloud2 { top: 100px; left: 15%; }
-        .cloud3 { top: 20px; left: 40%; }
-        .cloud4 { top: 80px; right: 5%; }
-        .cloud5 { top: 150px; right: 30%; }
+        .cloud1 {
+            top: 35px;
+            left: 10%;
+        }
+
+        .cloud2 {
+            top: 100px;
+            left: 15%;
+        }
+
+        .cloud3 {
+            top: 20px;
+            left: 40%;
+        }
+
+        .cloud4 {
+            top: 80px;
+            right: 5%;
+        }
+
+        .cloud5 {
+            top: 150px;
+            right: 30%;
+        }
 
         .title1 {
             font-size: 40px;
             color: #0096FF;
             text-shadow: 0px 0px 20px #C3F8FF;
             position: relative;
-            animation:ani 1s infinite alternate;
+            animation: ani 1s infinite alternate;
         }
 
         .title2 {
@@ -121,20 +137,24 @@
             font-size: 20px;
         }
 
-        .title2 > span {
+        .title2>span {
             position: relative;
             color: #ABD9FF;
-            animation:ani 1s infinite alternate;
+            animation: ani 1s infinite alternate;
         }
 
-        @keyframes ani{
-            0%{transform:translate(0,0);}
-            100%{transform:translate(0,5px);}
+        @keyframes ani {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(0, 5px);
+            }
         }
 
-
-        .header > div:nth-child(6),
-        .header > div:nth-child(7) {
+        .header>div:nth-child(6),
+        .header>div:nth-child(7) {
             width: 100%;
             text-align: center;
         }
@@ -148,11 +168,13 @@
             height: 74.5%;
             color: white;
             display: flex;
-            flex-direction: column; /* 수정된 부분 */
+            flex-direction: column;
+            /* 수정된 부분*/
         }
 
         button {
-            padding: 8px 24px; /* 수정된 버튼의 크기 */
+            padding: 8px 24px;
+            /* 수정된 버튼의 크기*/
             border-radius: 5px;
             cursor: pointer;
             color: #19376D;
@@ -176,9 +198,7 @@
             z-index: -1;
             background-color: #AEE2FF;
             border-radius: 5px;
-            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-            7px 7px 20px 0px rgba(0,0,0,.1),
-            4px 4px 5px 0px rgba(0,0,0,.1);
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5), 7px 7px 20px 0px rgba(0, 0, 0, .1), 4px 4px 5px 0px rgba(0, 0, 0, .1);
             transition: all 0.3s ease;
         }
 
@@ -187,10 +207,7 @@
             width: 100%;
         }
 
-        /* button:active {
-            top: 2px;
-        } */
-
+        /* button:active {top: 2px;} */
         #buttons {
             width: 100%;
             margin: 0px auto;
@@ -203,7 +220,8 @@
             align-items: center;
         }
 
-        #modify-btn, #list-btn{
+        #modify-btn,
+        #list-btn {
             margin-right: 50px;
         }
 
@@ -219,7 +237,7 @@
             align-items: center;
         }
 
-        .postbody{
+        .postbody {
             width: 80%;
             min-height: 450px;
             height: 85%;
@@ -235,17 +253,17 @@
             color: #000
         }
 
-        .postcontent{
+        .postcontent {
             min-height: 200px;
         }
 
-        .postheader > h1 {
+        .postheader>h1 {
             margin: 10px 0px 10px 10px;
             font-size: 30px;
             margin-bottom: 20px;
         }
 
-        .postheader > div{
+        .postheader>div {
             margin: 10px 0px 10px 10px;
             font-size: 15px;
         }
@@ -254,7 +272,7 @@
             font-size: 20px;
         }
 
-        .postcontent{
+        .postcontent {
             margin: 10px 0px 10px 10px;
         }
 
@@ -362,7 +380,7 @@
                     });
             });
         }
-    </script>
+     </script>
 </head>
 
 <body>
@@ -371,53 +389,48 @@
     <div class="colour"></div>
     <div class="colour"></div>
 </div>
-
 <div class="header">
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
     <div class="cloud cloud3"></div>
     <div class="cloud cloud4"></div>
     <div class="cloud cloud5"></div>
-    <div><h1 class="title1">Cloud Sky</h1></div>
-    <div><h4 class="title2"><span>☁</span> 환영합니다 <span>☁</span></h4></div>
-</div>
-
-<div class = "line"> </div>
-
-<div class="bottom">
-    <div class = "logoutbtn">
-        <button id="logoutbtn" href = "#"  onclick="location.href='/dev/post'">
-            로그아웃
-        </button>
+    <div>
+        <h1 class="title1">Cloud Sky</h1>
     </div>
+    <div>
+        <h4 class="title2"><span>☁</span> 환영합니다 <span>☁</span></h4>
+    </div>
+</div>
+<div class="line"> </div>
+<div class="bottom">
+    <div class="logoutbtn"><button id="logoutbtn" href="#" onclick="location.href='/dev/post'">로그아웃</button></div>
     <div class="post">
         <div class="postbody">
             <article>
-                <div id = "postcontent">
-                    <input type="hidden" id="article-id" th:value="${post.id}">
+                <div id="postcontent"><input type="hidden" id="article-id" th:value="${post.id}">
                     <header class="postheader">
                         <h1 class="fw-bolder mb-1" th:text="${post.title}">제목이얌</h1>
                         <div class="text-muted fst-italic mb-2" th:text="|Posted by ${post.username}|">작성자얌</div>
-                        <div class="text-muted fst-italic mb-2" th:text="|Posted on ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}|">시간이얌</div>
+                        <div class="text-muted fst-italic mb-2"
+                             th:text="|Posted on ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}|">시간이얌
+                        </div>
                     </header>
-                    <div class="lines">   </div>
+                    <div class="lines"> </div>
                     <section class="postcontent">
                         <p class="fs-5 mb-4" th:text="${post.content}">내용이얌</p>
                     </section>
-                    <div class="lines">   </div>
+                    <div class="lines"> </div>
                 </div>
-                <div id = "buttons">
+                <div id="buttons"><!--  "|location.href='/dev/post/' + ${post.id}|" -->
                     <button type="button" id="modify-btn"
-                            th:onclick="|location.href='@{/new-post?id={postId}(postId=${post.id})}'|"
+                            th:onclick="|location.href='@{/dev/newpost/{id}(id=${post.id})}'|"
                             class="btn btn-primary btn-sm">수정</button>
-                    <button type="button" id="list-btn" onclick="location.href='/dev/post'"
-                            class="btn btn-secondary btn-sm">목록</button>
-                    <button type="button" id="delete-btn"
-                            class="btn btn-secondary btn-sm">삭제</button>
-                </div>
+                    <button type="button" id="list-btn" onclick="location.href='/'" class="btn btn-secondary btn-sm">목록</button>
+                    <button
+                        type="button" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button></div>
             </article>
         </div>
     </div>
 </div>
-
 </body>

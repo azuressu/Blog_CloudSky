@@ -23,6 +23,11 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+    // 게시글 목록 조회
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
     // 선택한 게시글 하나만 가져오기
     public PostResponseDto getOnePost(Long id) {
         // pathvariable에서 받은 id 값으로 post 찾기

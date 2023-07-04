@@ -56,4 +56,5 @@ public class LikeService {
     private Post findPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
     }
+
 }
