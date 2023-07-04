@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -28,7 +29,9 @@ public class PostViewController {
 
     // 메인 페이지 반환
     @GetMapping("/")
-    public String getPostList() {
+    public String getPostList(Model model) {
+        List<PostResponseDto> posts = postService.getAllPosts().stream().map(PostResponseDto::new).collect(Collectors.toList());
+        model.addAttribute("posts", posts); // 블로그 글 리스트 저장
         return "index";
     }
 
