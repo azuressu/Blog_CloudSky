@@ -8,11 +8,14 @@ import com.example.cloudsky.entity.User;
 import com.example.cloudsky.entity.UserRoleEnum;
 import com.example.cloudsky.repository.UserRepository;
 import com.example.cloudsky.security.UserDetailsImpl;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.RejectedExecutionException;
 
