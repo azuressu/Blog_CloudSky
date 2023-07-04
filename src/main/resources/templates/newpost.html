@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cloud Sky</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   <script>
     // 삭제 기능
     const deleteButton = document.getElementById('delete-btn');
@@ -54,26 +56,31 @@
       });
     }
 
-    // 생성 기능
-    const createButton = document.getElementById('create-btn');
+    function onCreate() {
+      let username = $('#title').val();
+      let password = $('#content').val();
 
-    if (createButton) {
-      createButton.addEventListener('click', event => {
-        fetch('/dev/post', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: document.getElementById('title').value,
-            content: document.getElementById('content').value
-          })
-        })
-                .then(() => {
-                  alert('등록 완료되었습니다.');
-                  location.replace('/post');
+      $.ajax({
+        type: "POST",
+        url: `/dev/post`,
+        contentType: "application/json",
+        data: JSON.stringify({username: username, password: password}),
+      })
+              .done(function (res, status, xhr) {
+                const token = xhr.getResponseHeader('Authorization');
+
+                Cookies.set('Authorization', token, {path: '/'})
+
+                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                  jqXHR.setRequestHeader('Authorization', token);
                 });
-      });
+                swal('글 등록 성공!','success');
+                window.location.href = host;
+              })
+              // .fail(function (jqXHR, textStatus) {
+              //   swal('글 등록 실패!','warning');
+              //   window.location.href = host + '/dev/post';
+              // });
     }
   </script>
 
@@ -404,7 +411,7 @@
 
 <div class="bottom">
   <div class = "logoutbtn">
-    <button id="logoutbtn" href = "#"  onclick="location.href='/dev/post'">
+    <button id="logoutbtn" href = "#"  onclick="location.href='/logout'">
       로그아웃
     </button>
   </div>
@@ -422,7 +429,7 @@
           </section>
         </div>
         <div class="buttons">
-          <button th:if="${post.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
+          <button th:if="${post.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm" onclick="onCreate()">수정</button>
           <button th:if="${post.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
         </div>
       </article>

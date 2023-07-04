@@ -9,6 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -284,7 +286,7 @@
                     window.location.href = host;
                 })
                 .fail(function (jqXHR, textStatus) {
-                    alert("Login Fail");
+                    swal('로그인 실패!','warning');
                     window.location.href = host + '/dev/user/login-page?error'
                 });
         }

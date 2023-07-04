@@ -1,18 +1,20 @@
 package com.example.cloudsky.controller;
 
-import com.example.cloudsky.dto.ApiResponseDto;
-import com.example.cloudsky.dto.PasswordRequestDto;
-import com.example.cloudsky.dto.ProfileRequestDto;
-import com.example.cloudsky.dto.ProfileResponseDto;
+import com.example.cloudsky.dto.*;
 import com.example.cloudsky.security.UserDetailsImpl;
+import com.example.cloudsky.service.PostService;
 import com.example.cloudsky.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dev")
@@ -20,11 +22,20 @@ import java.util.concurrent.RejectedExecutionException;
 public class ProfileController {
 
     private final UserService userService;
+    private final PostService postService;
 
     // 프로필 조회
     @GetMapping("/my-page")
-    public ProfileResponseDto getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return userService.getMyPage(userDetails.getUser());
+    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
+
+        // 속성을 담을 Map 객체 생성
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("users", profileResponseDto);
+        attributes.put("post", profileResponseDto.getPosts());
+        model.addAllAttributes(attributes);
+
+        return "mypage";
     }
 
     // 프로필 수정

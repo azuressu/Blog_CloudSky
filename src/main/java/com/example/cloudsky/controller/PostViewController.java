@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,5 +42,21 @@ public class PostViewController {
         model.addAttribute("post", new PostResponseDto(post));
 
         return "post"; // post.html 뷰 조회
+    }
+
+    // 새로운 post 반환
+    @GetMapping("/dev/post")
+    // id 키를 가진 쿼리 파라미터의 값을 id 변수에 매핑 (id는 없을 수도 있음)
+    public String newArticle(@RequestParam(required=false) Long id, Model model) {
+        if (id == null) { // id가 없으면 설정
+            // 기본 생성자로 빈 객체를 만듦
+            model.addAttribute("post", new PostResponseDto());
+        } else { // id가 있으면 수정
+            Post post = postService.findByPostId(id);
+            // 기존 값을 가져오는 findById 메서드 호출
+            model.addAttribute("post", new PostResponseDto(post));
+        }
+
+        return "newpost";
     }
 }

@@ -35,12 +35,7 @@ public class PostService {
         // 해당 post를 responseDto에 담아서 반환
         return new PostResponseDto(post);
     } // 선택한 게시글 조회
-
-    // 게시글 목록 조회
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-
+    
     // 게시글 생성하기
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
         // requestDto로부터 받은 게시글의 제목과 내용을 Post에 넣어줌
