@@ -5,76 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cloud Sky</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
-
-  <script>
-    // 삭제 기능
-    const deleteButton = document.getElementById('delete-btn');
-
-    if (deleteButton) {
-      deleteButton.addEventListener('click', event => {
-        let id = document.getElementById('article-id').value;
-        fetch(`/dev/post/${id}`, {
-          method: 'DELETE'
-        })
-                .then(() => {
-                  alert('삭제가 완료되었습니다.');
-                  location.replace('/post');
-                });
-      });
-    }
-    /* HTML에서 id를 delete-btn로 설정한 엘리먼트를 찾아 그 엘리먼트에서 클릭 이벤트가 발생하면
-    fetch() 메서드를 통해 /api/articles/DELETE 요청을 보내는 역할을 함
-    fetch() 메서드에 이어지는 then() 메서드는 fetch()가 잘 완료되면 연이어 실행되는 메서드
-    alert() 메서드는 then() 메서드가 실행되는 시점에 웹 브라우저 화면으로 삭제가 완료됨을 알리는 팝업을 띄워주는 메서드
-    location.replace()메서드는 실행 시 사용자의 웹 브라우저 화면을 현재 주소를 기반해 옮겨주는 역할을 함 */
-
-    // 수정 기능
-    const modifyButton = document.getElementById('modify-btn');
-
-    if (modifyButton) {
-      modifyButton.addEventListener('click', event => {
-        let params = new URLSearchParams(location.search);
-        let id = params.get('id');
-
-        fetch(`/dev/post/${id}`, {
-          method: 'PUT',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: document.getElementById('title').value,
-            content: document.getElementById('content').value
-          })
-        })
-                .then(() => {
-                  alert('수정이 완료되었습니다.');
-                  location.replace(`/post/${id}`);
-                });
-      });
-    }
-
-    // 생성 기능
-    const createButton = document.getElementById('create-btn');
-
-    if (createButton) {
-      createButton.addEventListener('click', event => {
-        fetch('/dev/post', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: document.getElementById('title').value,
-            content: document.getElementById('content').value
-          })
-        })
-                .then(() => {
-                  alert('등록 완료되었습니다.');
-                  location.replace('/post');
-                });
-      });
-    }
-  </script>
   <style>
     * {
       font-family: "Poppins", sans-serif;
@@ -341,7 +271,8 @@
               class="btn btn-secondary btn-sm mb-3">글 등록</button>
     </div>
     <div style="float: right;">
-      <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
+      <button id="loginButton" class="btn btn-secondary" onclick="location.href='/dev/user/login-page'" style="display: none;">로그인</button>
+      <button id="logoutButton" class="btn btn-secondary" onclick="location.href='/logout'" style="display: none;">로그아웃</button>
     </div>
 
   </div>
@@ -359,6 +290,44 @@
     </div>
     <br>
   </div>
-
+</div>
 </body>
+
+<script>
+  // 페이지 로드 시 JWT 토큰 여부를 확인하여 로그인/로그아웃 버튼을 표시하거나 감추는 함수
+  function toggleButtons() {
+    const loginButton = document.getElementById('loginButton'); // 로그인 버튼 요소를 가져옴
+    const logoutButton = document.getElementById('logoutButton'); // 로그아웃 버튼 요소를 가져옴
+
+    const jwtToken = getJwtFromCookie(); // Request 헤더에서 JWT 토큰을 가져옴
+
+    if (jwtToken) {
+      loginButton.style.display = 'none'; // JWT 토큰이 존재하면 로그인 버튼을 감춤
+      logoutButton.style.display = 'inline'; // JWT 토큰이 존재하면 로그아웃 버튼을 표시
+    } else {
+      loginButton.style.display = 'inline'; // JWT 토큰이 존재하지 않으면 로그인 버튼을 표시
+      logoutButton.style.display = 'none'; // JWT 토큰이 존재하지 않으면 로그아웃 버튼을 감춤
+    }
+  }
+
+  function getJwtFromCookie() {
+    const cookieName = 'Authorization'; // JWT가 저장된 쿠키의 이름
+    const cookies = document.cookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+
+      if (cookie.startsWith(`${cookieName}=`)) {
+        const jwtCookie = cookie.substring(cookieName.length + 1);
+        return jwtCookie;
+      }
+    }
+
+    return null; // JWT가 존재하지 않는 경우 null 반환
+  }
+
+  // 페이지 로드 시 toggleButtons 함수를 호출하여 버튼 초기 상태를 설정
+  toggleButtons();
+
+</script>
 </html>

@@ -25,18 +25,18 @@ public class ProfileController {
     private final PostService postService;
 
     // 프로필 조회
-    @GetMapping("/my-page")
-    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
-
-        // 속성을 담을 Map 객체 생성
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("users", profileResponseDto);
-        attributes.put("post", profileResponseDto.getPosts());
-        model.addAllAttributes(attributes);
-
-        return "mypage";
-    }
+//    @GetMapping("/my-page")
+//    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+//        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
+//
+//        // 속성을 담을 Map 객체 생성
+//        Map<String, Object> attributes = new HashMap<>();
+//        attributes.put("users", profileResponseDto);
+//        attributes.put("post", profileResponseDto.getPosts());
+//        model.addAllAttributes(attributes);
+//
+//        return "mypage";
+//    }
 
     // 프로필 수정
     @PutMapping("/profile")

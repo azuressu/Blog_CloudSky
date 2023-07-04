@@ -1,21 +1,24 @@
 package com.example.cloudsky.controller;
 
+import com.example.cloudsky.dto.PostRequestDto;
 import com.example.cloudsky.dto.PostResponseDto;
+import com.example.cloudsky.dto.ProfileResponseDto;
 import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.PostService;
+import com.example.cloudsky.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class PostViewController {
 
     private final PostService postService;
+    private final UserService userService;
 
     // 메인 페이지 반환
     @GetMapping("/")
@@ -47,7 +51,7 @@ public class PostViewController {
     // 새로운 post 반환
     @GetMapping("/dev/post")
     // id 키를 가진 쿼리 파라미터의 값을 id 변수에 매핑 (id는 없을 수도 있음)
-    public String newArticle(@RequestParam(required=false) Long id, Model model) {
+    public String newPost(@RequestParam(required=false) Long id, Model model) {
         if (id == null) { // id가 없으면 설정
             // 기본 생성자로 빈 객체를 만듦
             model.addAttribute("post", new PostResponseDto());
@@ -56,7 +60,20 @@ public class PostViewController {
             // 기존 값을 가져오는 findById 메서드 호출
             model.addAttribute("post", new PostResponseDto(post));
         }
-
         return "newpost";
     }
+
+    // mypage 반환
+//    @GetMapping("/dev/my-page")
+//    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+//        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
+//
+//        // 속성을 담을 Map 객체 생성
+//        Map<String, Object> attributes = new HashMap<>();
+//        attributes.put("users", profileResponseDto);
+//        attributes.put("post", profileResponseDto.getPosts());
+//        model.addAllAttributes(attributes);
+//
+//        return "mypage";
+//    }
 }

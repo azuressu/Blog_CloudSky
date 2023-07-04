@@ -424,7 +424,7 @@
                 </div>
                 <div id="buttons"><!--  "|location.href='/dev/post/' + ${post.id}|" -->
                     <button type="button" id="modify-btn"
-                            th:onclick="|location.href='@{/dev/newpost/{id}(id=${post.id})}'|"
+                            th:onclick="|location.href='@{/dev/post(id=${post.id})}'|"
                             class="btn btn-primary btn-sm">수정</button>
                     <button type="button" id="list-btn" onclick="location.href='/'" class="btn btn-secondary btn-sm">목록</button>
                     <button
