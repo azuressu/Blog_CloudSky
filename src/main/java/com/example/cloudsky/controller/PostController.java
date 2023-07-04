@@ -6,16 +6,13 @@ import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.PostService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpHeaders;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -25,12 +22,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
-    // 선택 게시글 조회
-//    @GetMapping("/post/{id}")
-//    public PostResponseDto getOnePost(@PathVariable Long id) {
-//        return postService.getOnePost(id);
-//    }
 
     // 게시글 목록 조회
     @GetMapping("/post")
