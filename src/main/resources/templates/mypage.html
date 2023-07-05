@@ -43,10 +43,21 @@
       width: 66%;
       height: 15%;
       margin: 10px auto 0px;
-      align-items: center;
       display: flex;
-      justify-items: center;
-      text-align: right;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: left;
+    }
+
+    .logoutbtn > div:nth-child(1) {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .logoutbtn > div:nth-child(2) {
+      flex: 1;
+      display: flex;
       justify-content: flex-end;
     }
 
@@ -282,6 +293,7 @@
       justify-content: space-between;
       align-items: center;
     }
+
   </style>
 
 </head>
@@ -306,9 +318,12 @@
 
 <div class="bottom">
   <div class = "logoutbtn">
-    <button id="logoutbtn" href = "#"  onclick="location.href='/logout'">
-      로그아웃
-    </button>
+    <div> <!--th:onclick="|location.href='/dev/post'|"   onclick="location.href='/dev/my-page'"-->
+      <button id="mypageButton" class="btn btn-secondary" onclick="location.href='/'">메인 페이지</button>
+    </div>
+    <div>
+      <button id="logoutbtn" href = "#"  onclick="location.href='/logout'">로그아웃</button>
+    </div>
   </div>
   <div class="post">
     <div class="postbody">
