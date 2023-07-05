@@ -1,8 +1,9 @@
 package com.example.cloudsky.controller;
 
-import com.example.cloudsky.dto.*;
+import com.example.cloudsky.dto.ApiResponseDto;
+import com.example.cloudsky.dto.PasswordRequestDto;
+import com.example.cloudsky.dto.ProfileRequestDto;
 import com.example.cloudsky.security.UserDetailsImpl;
-import com.example.cloudsky.service.PostService;
 import com.example.cloudsky.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,13 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
-import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -47,15 +45,22 @@ public class ProfileController {
         return userService.updateProfile(userDetails.getUser(), profileRequestDto);
     }
 
+    // 비밀번호 확인
+    @PostMapping("/dev/profile/password")
+    public ResponseEntity<String> checkPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto passwordRequestDto) {
+        log.info("비밀번호 일치 여부 확인");
+        return userService.confirmPassword(userDetails, passwordRequestDto);
+    }
+
     // 비밀번호 변경
     @Transactional
-    @PutMapping("/dev/profile/password")
-    public ResponseEntity<ApiResponseDto> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto passwordRequestDto) {
+    @PutMapping("/dev/profile/passwordupdate")
+    public ResponseEntity<String> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto passwordRequestDto) {
         try {
             userService.updatePassword(userDetails, passwordRequestDto);
-            return ResponseEntity.ok().body(new ApiResponseDto("비밀번호 변경 성공", HttpStatus.OK.value()));
+            return ResponseEntity.ok().body("Success");
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body("Error");
         }
     }
 

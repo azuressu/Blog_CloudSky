@@ -3,19 +3,21 @@ package com.example.cloudsky.controller;
 import com.example.cloudsky.dto.ProfileResponseDto;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.UserService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RequiredArgsConstructor
 @Slf4j
 @Controller
 public class ProfileViewController {
 
     private final UserService userService;
+
+    public ProfileViewController(UserService userService) {
+        this.userService = userService;
+    }
 
     // mypage 반환
     @GetMapping("/dev/mypage")
@@ -34,12 +36,12 @@ public class ProfileViewController {
         return "mypageupdate";
     }
 
-    @GetMapping("/dev/password")
+    @GetMapping("/dev/profile/password")
     public String confirmPassword(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-
         return "password";
     }
-    @GetMapping("/dev/passwordupdate")
+
+    @GetMapping("/dev/profile/passwordupdate")
     public String getPassword(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return "passwordupdate";
     }
