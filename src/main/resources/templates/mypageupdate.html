@@ -246,7 +246,6 @@
 
           <div class="input__box">
             <button id="profileupdate" value="회원 정보 수정" onclick="onUpdateProfile()">회원 정보 수정</button>
-            <!-- <input type="submit" onclick="onUpdateProfile()" value="회원 정보 수정" /> -->
           </div>
 
         </form>
@@ -267,10 +266,10 @@
       url: `/dev/profile`,
       contentType: "application/json",
       data: JSON.stringify({ realname: realname, introduction: introduction }),
-      success: function(response) {
+      success: function(response, status, xhr) {
         console.log("성공");
         // 서버 응답이 성공적으로 왔을 때 처리
-        if (response === "Success") {
+        if (xhr.status === 200) {
           // 서버의 상태 코드가 200(성공)인 경우
           alert("프로필 수정 성공");
           location.replace("/dev/mypage");
@@ -279,8 +278,9 @@
           alert("본인만 수정할 수 있습니다.");
           location.replace("/dev/mypage");
         }
+
       },
-      error: function(xhr) {
+      error: function(xhr, status, error) {
         // 요청이 실패한 경우 처리할 로직을 작성합니다.
         console.log("POST 요청이 실패했습니다.");
         console.log(xhr.responseText);
