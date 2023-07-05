@@ -55,12 +55,13 @@ public class PostController {
     // 게시글 수정
     @Transactional
     @PutMapping("/dev/post/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("게시글 수정 시도");
         return postService.updatePost(id, requestDto, userDetails.getUser());
     }
     // 게시글 삭제
     @DeleteMapping("/dev/post/{id}")
-    public void deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        postService.deletePost(id, userDetails.getUser());
+    public ResponseEntity<String> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.deletePost(id, userDetails.getUser());
     }
 }

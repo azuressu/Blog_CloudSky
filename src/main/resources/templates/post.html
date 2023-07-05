@@ -428,9 +428,48 @@
                             class="btn btn-primary btn-sm">수정</button>
                     <button type="button" id="list-btn" onclick="location.href='/'" class="btn btn-secondary btn-sm">목록</button>
                     <button
-                        type="button" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button></div>
+                        type="button" onclick="onDelete()" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button></div>
             </article>
         </div>
     </div>
 </div>
 </body>
+<script>
+
+    function onDelete() {
+        let url = window.location.href;
+        let id = url.replace("http://localhost:8080/dev/post/", "");
+        console.log(id);
+
+        $.ajax({
+            type: "DELETE",
+            url: `/dev/post/${id}`,
+            contentType: "application/json",
+            success: function(response, status, xhr) {
+
+                // 요청이 성공한 경우 처리할 로직을 작성합니다.
+                console.log("DELETE 요청이 성공했습니다.");
+
+                // 서버 응답이 성공적으로 왔을 때 처리
+                if (xhr.status === 200) {
+                    // 서버의 상태 코드가 200(성공)인 경우
+                    alert("게시글 삭제 성공");
+                } else {
+                    // 다른 상태 코드에 따라 처리
+                    alert("작성자만 삭제할 수 있습니다.");
+                }
+
+                location.replace("/");
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                console.log("DELETE 요청이 실패했습니다.");
+                console.log(xhr.responseText);
+                alert("작성자만 삭제할 수 있습니다.");
+                location.replace("/");
+            }
+        });
+    }
+</script>
+
+</html>

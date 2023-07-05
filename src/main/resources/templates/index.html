@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cloud Sky</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   <style>
     * {
       font-family: "Poppins", sans-serif;
@@ -68,11 +70,11 @@
     .logoutbtn {
       width: 60%;
       height: 15%;
-      margin-top: 10px auto 0px;
+      margin: 10px auto 0px;
       align-items: center;
       display: flex;
-      justify-items: center;
-      text-align: right;
+      /*justify-items: center;*/
+      /*text-align: right;*/
       justify-content: space-between;
     }
 
@@ -266,11 +268,14 @@
 <div class="bottom">
   <div class = "logoutbtn">
 
-    <div style="float: left;">
+    <div>
       <button type="button" id="create-btn" th:onclick="|location.href='/dev/post'|"
               class="btn btn-secondary btn-sm mb-3">글 등록</button>
     </div>
-    <div style="float: right;">
+    <div>
+      <button id="mypageButton" class="btn btn-secondary" onclick="location.href='/dev/my-page'" style="display: none;">마이페이지</button>
+    </div>
+    <div>
       <button id="loginButton" class="btn btn-secondary" onclick="location.href='/dev/user/login-page'" style="display: none;">로그인</button>
       <button id="logoutButton" class="btn btn-secondary" onclick="location.href='/logout'" style="display: none;">로그아웃</button>
     </div>
@@ -298,15 +303,18 @@
   function toggleButtons() {
     const loginButton = document.getElementById('loginButton'); // 로그인 버튼 요소를 가져옴
     const logoutButton = document.getElementById('logoutButton'); // 로그아웃 버튼 요소를 가져옴
+    const mypageButton = document.getElementById('mypageButton'); // 마이페이지 버튼 요소를 가져옴
 
     const jwtToken = getJwtFromCookie(); // Request 헤더에서 JWT 토큰을 가져옴
 
     if (jwtToken) {
       loginButton.style.display = 'none'; // JWT 토큰이 존재하면 로그인 버튼을 감춤
       logoutButton.style.display = 'inline'; // JWT 토큰이 존재하면 로그아웃 버튼을 표시
+      mypageButton.style.display = 'inline';
     } else {
       loginButton.style.display = 'inline'; // JWT 토큰이 존재하지 않으면 로그인 버튼을 표시
       logoutButton.style.display = 'none'; // JWT 토큰이 존재하지 않으면 로그아웃 버튼을 감춤
+      mypageButton.style.display = 'none';
     }
   }
 

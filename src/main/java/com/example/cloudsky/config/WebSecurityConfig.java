@@ -5,6 +5,7 @@ import com.example.cloudsky.jwt.JwtAuthorizationFilter;
 import com.example.cloudsky.jwt.JwtUtil;
 import com.example.cloudsky.security.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,20 +21,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity // Spring Security 지원을 가능하게 함
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@RequiredArgsConstructor
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
-    private ObjectMapper objectMapper;
-
-    public WebSecurityConfig(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService, AuthenticationConfiguration authenticationConfiguration, ObjectMapper objectMapper) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-        this.authenticationConfiguration = authenticationConfiguration;
-        this.objectMapper = objectMapper;
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -49,7 +43,7 @@ public class WebSecurityConfig {
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil, userDetailsService, objectMapper);
+        return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
     }
 
     @Bean
@@ -66,18 +60,21 @@ public class WebSecurityConfig {
                 authorizeHttpRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/dev/user/**").permitAll() // '/dev/user/'로 시작하는 요청 모두 접근 허가
-                        .requestMatchers(HttpMethod.GET, "/dev/post/**").permitAll() // GET 메소드 요청 접근 허가
+//                        .requestMatchers(HttpMethod.GET, "/dev/post/**").permitAll() // GET 메소드 요청 접근 허가
                         .requestMatchers("/").permitAll() // 메인 페이지 요청
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
         http.formLogin((formLogin) ->
                 formLogin
-                        .loginPage("/dev/user/login-page").permitAll()
+                        .loginPage("/dev/user/login-page")
+                        .permitAll()
         );
 
         // 필터 관리
+        // JwtAuthenticationFilter 수행 전에 jwtAuthorizationFilter를 먼저 수행하겠다
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
+        // UsernamePasswordAuthenticationFilter가 수행되기 전에 jwtAuthenticationFilter를 먼저 수행하겠다
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
