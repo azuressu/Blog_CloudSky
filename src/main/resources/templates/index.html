@@ -272,8 +272,8 @@
       <button type="button" id="create-btn" th:onclick="|location.href='/dev/post'|"
               class="btn btn-secondary btn-sm mb-3">글 등록</button>
     </div>
-    <div>
-      <button id="mypageButton" class="btn btn-secondary" onclick="location.href='/dev/my-page'" style="display: none;">마이페이지</button>
+    <div> <!--th:onclick="|location.href='/dev/post'|"   onclick="location.href='/dev/my-page'"-->
+      <button id="mypageButton" class="btn btn-secondary" onclick="goToMyPage()" style="display: none;">마이페이지</button>
     </div>
     <div>
       <button id="loginButton" class="btn btn-secondary" onclick="location.href='/dev/user/login-page'" style="display: none;">로그인</button>
@@ -315,6 +315,15 @@
       loginButton.style.display = 'inline'; // JWT 토큰이 존재하지 않으면 로그인 버튼을 표시
       logoutButton.style.display = 'none'; // JWT 토큰이 존재하지 않으면 로그아웃 버튼을 감춤
       mypageButton.style.display = 'none';
+    }
+  }
+
+  function goToMyPage() {
+    const jwtToken = getJwtFromCookie();
+    if (jwtToken) {
+      location.href = '/dev/mypage';
+    } else {
+      location.href = '/dev/user/login-page';
     }
   }
 

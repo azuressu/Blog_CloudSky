@@ -10,6 +10,7 @@ import com.example.cloudsky.repository.UserRepository;
 import com.example.cloudsky.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,11 +46,11 @@ public class UserService {
 
     // 프로필 수정
     @Transactional
-    public ProfileResponseDto updateProfile(User user, ProfileRequestDto profileRequestDto) {
+    public ResponseEntity<String> updateProfile(User user, ProfileRequestDto profileRequestDto) {
         user.setRealname(profileRequestDto.getRealname());
         user.setIntroduction(profileRequestDto.getIntroduction());
         userRepository.save(user);
-        return new ProfileResponseDto(user);
+        return ResponseEntity.ok("Success"); // 상태 코드 200 반환
     }
 
     /// 비밀번호 변경

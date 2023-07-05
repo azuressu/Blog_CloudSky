@@ -66,6 +66,7 @@ public class UserController {
             }
             return "redirect:/dev/user/signup";
         }
+
         userService.signup(requestDto);
 
         return  "redirect:/dev/user/login-page";

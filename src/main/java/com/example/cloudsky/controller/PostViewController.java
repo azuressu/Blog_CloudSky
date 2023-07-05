@@ -63,17 +63,4 @@ public class PostViewController {
         return "newpost";
     }
 
-    // mypage 반환
-    @GetMapping("/dev/my-page")
-    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
-
-        // 속성을 담을 Map 객체 생성
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("users", profileResponseDto);
-        attributes.put("posts", profileResponseDto.getPosts());
-        model.addAllAttributes(attributes);
-
-        return "mypage";
-    }
 }

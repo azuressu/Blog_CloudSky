@@ -5,9 +5,11 @@ import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.PostService;
 import com.example.cloudsky.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +19,11 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/dev")
+@Slf4j
 @RequiredArgsConstructor
 public class ProfileController {
 
     private final UserService userService;
-    private final PostService postService;
 
     // 프로필 조회
 //    @GetMapping("/my-page")
@@ -39,13 +40,16 @@ public class ProfileController {
 //    }
 
     // 프로필 수정
-    @PutMapping("/profile")
-    public ProfileResponseDto updateProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody ProfileRequestDto profileRequestDto) {
+    @Transactional
+    @PutMapping("/dev/profile")
+    public ResponseEntity<String> updateProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody ProfileRequestDto profileRequestDto) {
+        log.info("프로필 수정 시도");
         return userService.updateProfile(userDetails.getUser(), profileRequestDto);
     }
 
     // 비밀번호 변경
-    @PutMapping("/profile/password")
+    @Transactional
+    @PutMapping("/dev/profile/password")
     public ResponseEntity<ApiResponseDto> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto passwordRequestDto) {
         try {
             userService.updatePassword(userDetails, passwordRequestDto);

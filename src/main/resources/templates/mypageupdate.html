@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cloud Sky</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   <style>
     * {
       margin: 0;
@@ -166,7 +168,8 @@
       margin-top: 20px;
     }
 
-    .form .input__box input {
+    .form .input__box input,
+    .form .input__box button {
       width: 100%;
       color: #000;
       border: none;
@@ -186,11 +189,11 @@
       color: #fff;
     }
 
-    .form .input__box input[type="submit"] {
+    #profileupdate {
       color: #666;
       cursor: pointer;
       background: #fff;
-      max-width: 180px;
+      max-width: 200px;
       font-weight: 600;
       margin-bottom: 10px;
     }
@@ -231,8 +234,7 @@
     <div class="container">
       <div class="form">
         <h2>회원 정보 수정</h2>
-        <form action="/dev/user/{id}" method="post">
-
+        <form>
           <div class="input__box">
             <input type="text" name="realname" id="realname"  placeholder="realname" />
           </div>
@@ -242,7 +244,8 @@
           </div>
 
           <div class="input__box">
-            <input type="submit" value="회원 정보 수정" />
+            <button id="profileupdate" value="회원 정보 수정" onclick="onUpdateProfile()">회원 정보 수정</button>
+            <!-- <input type="submit" onclick="onUpdateProfile()" value="회원 정보 수정" /> -->
           </div>
 
         </form>
@@ -251,4 +254,42 @@
   </div>
 </section>
 </body>
+
+<script>
+  function onUpdateProfile() {
+    let realname = $('#realname').val();
+    let introduction = $('#introduction').val();
+    console.log(realname, introduction);
+
+    $.ajax({
+      type: "PUT",
+      url: `/dev/profile`,
+      contentType: "application/json",
+      data: JSON.stringify({realname: realname, introduction: introduction}),
+      success: function(response, status, xhr) {
+        // 요청이 성공한 경우 처리할 로직을 작성합니다.
+        console.log("PUT 요청이 성공했습니다.");
+
+        // 서버 응답이 성공적으로 왔을 때 처리
+        if (xhr.status === 200) {
+          // 서버의 상태 코드가 200(성공)인 경우
+          alert("프로필 수정 성공");
+        } else {
+          // 다른 상태 코드에 따라 처리
+          alert("작성자만 수정할 수 있습니다.");
+        }
+
+        location.replace("/dev/mypage");
+      },
+      error: function(xhr, status, error) {
+        // 요청이 실패한 경우 처리할 로직을 작성합니다.
+        console.log("POST 요청이 실패했습니다.");
+        console.log(xhr.responseText);
+        alert("작성자만 수정할 수 있습니다.");
+        location.replace("/dev/mypage");
+      }
+    });
+  }
+
+</script>
 </html>
