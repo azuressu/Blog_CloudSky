@@ -5,6 +5,7 @@ import com.example.cloudsky.dto.PostResponseDto;
 import com.example.cloudsky.dto.ProfileResponseDto;
 import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.security.UserDetailsImpl;
+import com.example.cloudsky.service.LikeService;
 import com.example.cloudsky.service.PostService;
 import com.example.cloudsky.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 @RequiredArgsConstructor
 @Slf4j
 @Controller
@@ -29,10 +29,11 @@ public class PostViewController {
 
     private final PostService postService;
     private final UserService userService;
+    private final LikeService likeService;
 
     // 메인 페이지 반환
     @GetMapping("/")
-    public String getPostList(Model model) {
+    public String getPostList(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         List<PostResponseDto> posts = postService.getAllPosts().stream().map(PostResponseDto::new).collect(Collectors.toList());
         model.addAttribute("posts", posts); // 블로그 글 리스트 저장
 
@@ -41,9 +42,14 @@ public class PostViewController {
 
     // post 내용 반환
     @GetMapping("/dev/post/{id}")
-    public String getOnePost(@PathVariable Long id, Model model) {
+    public String getOnePost(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Post post = postService.findByPostId(id);
-        model.addAttribute("post", new PostResponseDto(post));
+        PostResponseDto postResponseDto = new PostResponseDto(post);
+        model.addAttribute("post", postResponseDto);
+        // 좋아요 어떻게 식별하지 ?
+        Boolean like = likeService.likefind(id, userDetails);
+        model.addAttribute("like", like);
+        model.addAttribute("comments", postResponseDto.getCommentList());
 
         return "post"; // post.html 뷰 조회
     }

@@ -7,9 +7,9 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>-->
+    <!--    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
         * {
             font-family: "Poppins", sans-serif;
@@ -172,8 +172,18 @@
             height: 74.5%;
             color: white;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             /* 수정된 부분*/
+        }
+
+        .mainbody {
+            height: 100%;
+            width: 60%;
+        }
+
+        .subbody {
+            height: 100%;
+            width: 40%;
         }
 
         button {
@@ -257,6 +267,30 @@
             color: #000
         }
 
+        .cardarea {
+            margin-top: 6%;
+            width: 90%;
+            height: 85%;
+            overflow: scroll;
+        }
+
+        .mycards {
+            width: 100%;
+            min-height: 100px;
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            color: #000
+        }
+
+
         .postcontent {
             min-height: 200px;
         }
@@ -315,24 +349,132 @@
             height: 300px;
             background: #A7ECEE;
         }
+
+        .postheader {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .postheader > div:first-child {
+            width: 80%;
+        }
+
+        .postheader > div:last-child {
+            width: 20%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column; /* 수정된 부분 */
+            align-items: flex-end; /* 수정된 부분 */
+        }
+
+        .postheader > div:last-child > p,
+        .postheader > div:last-child > input {
+            display: block;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-input {
+            position: absolute;
+            opacity: 0;
+            /*pointer-events: none;*/
+        }
+
+        .checkbox-image {
+            display: inline-block;
+            width: 20px; /* 이미지의 너비에 맞게 조절 */
+            height: 20px; /* 이미지의 높이에 맞게 조절 */
+            background-image: url("https://cdn-icons-png.flaticon.com/128/1077/1077035.png"); /* 이미지 경로 설정 */
+            background-size: cover; /* 이미지 크기에 맞게 조절 */
+            background-position: center; /* 이미지 위치 조절 */
+        }
+
+        .checkbox-input:checked + .checkbox-image {
+            /* 체크된 상태일 때의 이미지 스타일링 */
+            background-image: url("https://cdn-icons-png.flaticon.com/128/833/833472.png"); /* 체크된 이미지 경로 설정 */
+        }
+
+        .checkbox-text {
+            margin-left: 10px; /* 이미지와 텍스트 사이의 간격을 조정할 수 있습니다 */
+        }
+
+        .mypost {
+            height: 15%;
+            margin-top: 10px;
+            width: 100%;
+            /*float: center;*/
+        }
+
+        #commentName {
+            width: 100%;
+            background-color: #F9F7F7;
+            border: 1px solid #a9a9a9;
+        }
+
+        #commentDate_ {
+            color: #000;
+            font-size: 12px;
+        }
+
+        #commentName_ {
+            color: #000;
+            font-size: 18px;
+            margin: 5px 0px 0px 0px;
+        }
+
+        #commentContent_ {
+            color: #000;
+            font-size: 18px;
+            margin: 0px;
+        }
+
+        .edit-form {
+            width: 80%;
+            float: left;
+        }
+
+        .form-floating, .mybtns {
+            width: 80%;
+        }
+
+        .edit-form input,
+        .form-floating input,
+        .form-floating textarea {
+            width: 100%;
+            color: #000;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            letter-spacing: 1px;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .edit-form input {
+            width: 100%;
+            color: #000;
+            border: none;
+            margin-bottom: 10px;
+            outline: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            letter-spacing: 1px;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
     </style>
-    <script>
-        // // 삭제 기능
-        // const deleteButton = document.getElementById('delete-btn');
-        //
-        // if (deleteButton) {
-        //     deleteButton.addEventListener('click', event => {
-        //         let id = document.getElementById('article-id').value;
-        //         fetch(`/dev/post/${id}`, {
-        //             method: 'DELETE'
-        //         })
-        //             .then(() => {
-        //                 alert('삭제가 완료되었습니다.');
-        //                 location.replace('/post');
-        //             });
-        //     });
-        // }
-     </script>
 </head>
 
 <body>
@@ -356,37 +498,432 @@
 </div>
 <div class="line"> </div>
 <div class="bottom">
-    <div class="logoutbtn"><button id="logoutbtn" href="#" onclick="location.href='/logout'">로그아웃</button></div>
-    <div class="post">
-        <div class="postbody">
-            <article>
-                <div id="postcontent"><input type="hidden" id="article-id" th:value="${post.id}">
-                    <header class="postheader">
-                        <h1 class="fw-bolder mb-1" th:text="${post.title}">제목이얌</h1>
-                        <div class="text-muted fst-italic mb-2" th:text="|Posted by ${post.username}|">작성자얌</div>
-                        <div class="text-muted fst-italic mb-2"
-                             th:text="|Posted on ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}|">시간이얌
-                        </div>
-                    </header>
-                    <div class="lines"> </div>
-                    <section class="postcontent">
-                        <p class="fs-5 mb-4" th:text="${post.content}">내용이얌</p>
-                    </section>
-                    <div class="lines"> </div>
-                </div>
-                <div id="buttons"><!--  "|location.href='/dev/post/' + ${post.id}|" -->
-                    <button type="button" id="modify-btn"
-                            th:onclick="|location.href='@{/dev/post(id=${post.id})}'|"
-                            class="btn btn-primary btn-sm">수정</button>
-                    <button type="button" id="list-btn" onclick="location.href='/'" class="btn btn-secondary btn-sm">목록</button>
-                    <button
-                        type="button" onclick="onDelete()" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button></div>
-            </article>
+    <div class="mainbody">
+        <div class="logoutbtn"><button id="logoutbtn" href="#" onclick="location.href='/logout'">로그아웃</button></div>
+        <div class="post">
+            <div class="postbody">
+                <article>
+                    <div id="postcontent"><input type="hidden" id="article-id" th:value="${post.id}">
+                        <header class="postheader">
+                            <div >
+                                <h1 class="fw-bolder mb-1" th:text="${post.title}">제목이얌</h1>
+                                <div class="text-muted fst-italic mb-2" th:text="|Posted by ${post.username}|">작성자얌</div>
+                                <div class="text-muted fst-italic mb-2"
+                                     th:text="|Posted on ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}|">시간이얌
+                                </div>
+
+                            </div>
+                            <div >
+                                <form onsubmit="return false;">
+                                    <label for="myCheckbox" class="checkbox-label">
+                                        <input type="checkbox" id="myCheckbox" class="checkbox-input"  onchange="handleCheckboxChange()">
+                                        <span class="checkbox-image"></span>
+                                        <span class="checkbox-text" th:text="${post.likeCount}"></span>
+                                    </label>
+                                </form>
+                            </div>
+
+                        </header>
+                        <div class="lines"> </div>
+                        <section class="postcontent">
+                            <p class="fs-5 mb-4" th:text="${post.content}">내용이얌</p>
+                        </section>
+                        <div class="lines"> </div>
+                    </div>
+                    <div id="buttons"><!--  "|location.href='/dev/post/' + ${post.id}|" -->
+                        <button type="button" id="modify-btn"
+                                th:onclick="|location.href='@{/dev/post(id=${post.id})}'|"
+                                class="btn btn-primary btn-sm">수정</button>
+                        <button type="button" id="list-btn" onclick="location.href='/'" class="btn btn-secondary btn-sm">목록</button>
+                        <button
+                                type="button" onclick="onDelete()" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button></div>
+                </article>
+            </div>
         </div>
     </div>
+
+    <div class="subbody">
+        <div style="margin-right: 50px; height:100%;">
+            <div class="mypost" id="post-box">
+                <div class="form-floating mb-3">
+                    <input
+                            type="commentName"
+                            class="form-control"
+                            id="commentName"
+                            placeholder="내용"
+                    />
+                </div>
+                <div class="mybtns">
+                    <div class="btn" style="margin-top: 10px;">
+                        <button type="button" class="btn-danger" onclick="save_comment()">
+                            등록하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="cardarea">
+                <div class="mycards" id="comment-list"  th:each="comment : ${comments}">
+                <div class="card" id="card">
+                    <div class="card-body">
+                        <p id="commentName_" th:text="${comment.username}"></p>
+                        <p id="commentContent_" th:text="${comment.commentcontents}"></p>
+                        <p id="commentDate_" th:text="${comment.createdAt}" class="blockquote-footer">${date}</p>
+                    </div>
+
+                    <div class="card-button" id = "card-button">
+                        <button class = "button_ud" id="button_ud">수정</button>
+                        <button class = "button_del" th:id="${comment.id}">삭제</button>
+                    </div>
+
+                    <div class="edit-form" style="display: none">
+                        <input id="message" th:placeholder="${comment.commentcontents}"></input>
+                        <button class="submit-btn" th:id="${comment.id}">저장</button>
+                        <button class="cancel-btn">취소</button>
+                    </div>
+
+                </div>
+            </div>
+            <!--mycards-->
+            </div>
+        </div>
+    </div>
+    <!--subbody-->
 </div>
 </body>
 <script>
+    var like = [[${like}]]; // 서버에서 전달된 like 값을 가져옵니다.
+
+    // 페이지 로딩 후 실행되는 함수
+    window.onload = function() {
+        var checkbox = document.getElementById('myCheckbox');
+        if (like) {
+            checkbox.checked = true; // like 값이 true인 경우 체크박스 선택
+        } else {
+            checkbox.checked = false; // like 값이 false인 경우 체크박스 선택 해제
+        }
+    };
+
+    const submitBtns = document.querySelectorAll('#button_ud');
+    const deleteBtns = document.querySelectorAll('.button_del');
+    const updateBtns = document.querySelectorAll('.submit-btn');
+    const calcenBtns = document.querySelectorAll('.cancel-btn');
+
+    // 댓글 삭제하기
+    deleteBtns.forEach(button => {
+        button.addEventListener('click', function () {
+            // id는 postid값임
+            let url = window.location.href;
+            let id = url.replace("http://localhost:8080/dev/post/", "");
+            console.log(id);
+
+            let commentId = button.id; // comment.id 값을 가져옴
+            console.log(commentId);
+
+            $.ajax({
+                type: "DELETE",
+                url: `/dev/post/${id}/comment/${commentId}`,
+                contentType: "application/json",
+                success: function(response, status, xhr) {
+
+                    // 서버 응답이 성공적으로 왔을 때 처리
+                    if (xhr.status === 200) {
+                        // 서버의 상태 코드가 200(성공)인 경우
+                        Swal.fire({
+                            icon: 'success',                         // Alert 타입
+                            title: '삭제 완료!'        // Alert 제목
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `http://localhost:8080/dev/post/${id}`;
+                            }
+                        });
+                    } else {
+                        // 다른 상태 코드에 따라 처리
+                        Swal.fire({
+                            icon: 'error',                         // Alert 타입
+                            title: '작성자만 삭제 가능합니다.'        // Alert 제목
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `http://localhost:8080/dev/post/${id}`;
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                    console.log("DELETE 요청이 실패했습니다.");
+                    console.log(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',                         // Alert 타입
+                        title: '작성자만 삭제 가능합니다'        // Alert 제목
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `http://localhost:8080/dev/post/${id}`;
+                        }
+                    });
+                }
+            });
+
+        })
+    });
+
+    // 수정 페이지 안보이게 하기
+    calcenBtns.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작 방지
+
+            // 현재 버튼과 관련된 .card 요소 찾기
+            const card = button.closest('.card');
+
+            // .card-body와 .card-button 요소를 가져옵니다.
+            const cardBody = card.querySelector('.card-body');
+            const cardButton = card.querySelector('.card-button');
+
+            // .card-body와 .card-button 요소를 토글합니다.
+            if (cardBody.style.display === 'none') {
+                cardBody.style.display = 'block';
+                cardButton.style.display = 'block';
+            } else {
+                cardBody.style.display = 'none';
+                cardButton.style.display = 'none';
+            }
+
+            // .edit-form 요소를 가져옵니다.
+            const editForm = card.querySelector('.edit-form');
+
+            // .edit-form 요소의 표시 상태를 변경합니다.
+            if (editForm.style.display === 'none') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        })
+    });
+
+    // 댓글 수정 부분 보이게 하기
+    submitBtns.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작 방지
+
+            // 현재 버튼과 관련된 .card 요소 찾기
+            const card = button.closest('.card');
+
+            // .card-body와 .card-button 요소를 가져옵니다.
+            const cardBody = card.querySelector('.card-body');
+            const cardButton = card.querySelector('.card-button');
+
+            // .card-body와 .card-button 요소를 토글합니다.
+            if (cardBody.style.display === 'none') {
+                cardBody.style.display = 'block';
+                cardButton.style.display = 'block';
+            } else {
+                cardBody.style.display = 'none';
+                cardButton.style.display = 'none';
+            }
+
+            // .edit-form 요소를 가져옵니다.
+            const editForm = card.querySelector('.edit-form');
+
+            // .edit-form 요소의 표시 상태를 변경합니다.
+            if (editForm.style.display === 'none') {
+                editForm.style.display = 'block';
+            } else {
+                editForm.style.display = 'none';
+            }
+        })
+    });
+
+    // 댓글 수정하기
+    updateBtns.forEach(button => {
+        button.addEventListener('click', function () {
+            // id는 postid값임
+            let url = window.location.href;
+            let id = url.replace("http://localhost:8080/dev/post/", "");
+            console.log(id);
+
+            let commentId = button.id; // comment.id 값을 가져옴
+            console.log(commentId);
+
+            let commentcontents = $('#message').val();
+
+            $.ajax({
+                type: "PUT",
+                url: `/dev/post/${id}/comment/${commentId}`,
+                contentType: "application/json",
+                data: JSON.stringify({commentcontents: commentcontents}),
+                success: function(response, status, xhr) {
+
+                    // 요청이 성공한 경우 처리할 로직을 작성합니다.
+                    console.log("PUT 요청이 성공했습니다.");
+
+                    // 서버 응답이 성공적으로 왔을 때 처리
+                    if (xhr.status === 200) {
+                        // 서버의 상태 코드가 200(성공)인 경우
+                        Swal.fire({
+                            icon: 'success',                         // Alert 타입
+                            title: '수정 완료!'        // Alert 제목
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `http://localhost:8080/dev/post/${id}`;
+                            }
+                        });
+                    } else {
+                        // 다른 상태 코드에 따라 처리
+                        Swal.fire({
+                            icon: 'error',                         // Alert 타입
+                            title: '작성자만 수정 가능합니다.'        // Alert 제목
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `http://localhost:8080/dev/post/${id}`;
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                    console.log("DELETE 요청이 실패했습니다.");
+                    console.log(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',                         // Alert 타입
+                        title: '작성자만 수정 가능합니다'        // Alert 제목
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `http://localhost:8080/dev/post/${id}`;
+                        }
+                    });
+                }
+            });
+
+        })
+    });
+
+    // 댓글 등록하기
+    function save_comment() {
+        let commentcontents = $('#commentName').val();
+        let url = window.location.href;
+        let id = url.replace("http://localhost:8080/dev/post/", "");
+
+        $.ajax({
+            type:"POST",
+            url: `/dev/post/${id}/comment`,
+            contentType: "application/json",
+            data: JSON.stringify({commentcontents: commentcontents}),
+            success: function(response, status, xhr) {
+                // 요청이 성공한 경우 처리할 로직을 작성합니다.
+                console.log("POST 요청이 성공했습니다.");
+
+                // 서버 응답이 성공적으로 왔을 때 처리
+                if (xhr.status === 200) {
+                    // 서버의 상태 코드가 200(성공)인 경우
+                    Swal.fire({
+                        icon: 'success',                         // Alert 타입
+                        title: '작성 완료!'        // Alert 제목
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `http://localhost:8080/dev/post/${id}`;
+                        }
+                    });
+                } else {
+                    // 다른 상태 코드에 따라 처리
+                    Swal.fire({
+                        icon: 'error',                         // Alert 타입
+                        title: '회원만 작성 가능합니다'        // Alert 제목
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "http://localhost:8080";
+                        }
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                console.log("POST 요청이 실패했습니다.");
+                console.log(xhr.responseText);
+                Swal.fire({
+                    icon: 'error',                         // Alert 타입
+                    title: '회원만 작성 가능합니다'        // Alert 제목
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "http://localhost:8080";
+                    }
+                });
+            }
+        });
+    }
+
+    function handleCheckboxChange() {
+        var checkbox = document.getElementById('myCheckbox');
+        if (checkbox.checked) {
+            onHeartAdd();
+        } else {
+            onHeartDelete();
+        }
+    }
+
+    function onHeartAdd() {
+        let url = window.location.href;
+        let id = url.replace("http://localhost:8080/dev/post/", "");
+        console.log(id);
+
+        $.ajax({
+            type: "POST",
+            url: `/dev/like/${id}`,
+            success: function (response, status, xhr) {
+                // 요청이 성공한 경우 처리할 로직을 작성합니다.
+                console.log("POST 요청이 성공했습니다.");
+                // window.location.href =  `http://localhost:8080/dev/post/${id}`
+                if (xhr.status === 200) {
+                    // 서버의 상태 코드가 200(성공)인 경우
+                    window.location.href = `http://localhost:8080/dev/post/${id}`
+                } else {
+                    // 다른 상태 코드에 따라 처리
+                    Swal.fire({
+                        icon: 'error',                         // Alert 타입
+                        title: '작성자는 좋아요를 누를 수 없습니다!'        // Alert 제목
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `http://localhost:8080/dev/post/${id}`
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                console.log("POST 요청이 실패했습니다.");
+                console.log(xhr.responseText);
+                Swal.fire({
+                    icon: 'error',                         // Alert 타입
+                    title: '작성자는 좋아요를 누를 수 없습니다!'        // Alert 제목
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href =  `http://localhost:8080/dev/post/${id}`
+                    }
+                });
+            }
+        });
+    }
+
+    function onHeartDelete() {
+        let url = window.location.href;
+        let id = url.replace("http://localhost:8080/dev/post/", "");
+        console.log(id);
+
+        $.ajax({
+            type: "DELETE",
+            url: `/dev/like/${id}`,
+            success: function(response, status, xhr) {
+                // 요청이 성공한 경우 처리할 로직을 작성합니다.
+                console.log("DELETE 요청이 성공했습니다.");
+                window.location.href =  `http://localhost:8080/dev/post/${id}`;
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패한 경우 처리할 로직을 작성합니다.
+                console.log("DELETE 요청이 실패했습니다.");
+                console.log(xhr.responseText);
+                window.location.href =  `http://localhost:8080/dev/post/${id}`;
+            }
+        });
+    }
+
     function onDelete() {
         let url = window.location.href;
         let id = url.replace("http://localhost:8080/dev/post/", "");
@@ -401,23 +938,27 @@
                 // 요청이 성공한 경우 처리할 로직을 작성합니다.
                 console.log("DELETE 요청이 성공했습니다.");
 
-                // 서버 응답이 성공적으로 왔을 때 처리
-                if (xhr.status === 200) {
-                    // 서버의 상태 코드가 200(성공)인 경우
-                    swal("삭제 성공!", "success");
-                } else {
-                    // 다른 상태 코드에 따라 처리
-                    swal("삭제 실패", "error");
-                }
-
-                location.replace("/");
+                Swal.fire({
+                    icon: 'success',                         // Alert 타입
+                    title: '삭제 완료!'        // Alert 제목
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "http://localhost:8080";
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 // 요청이 실패한 경우 처리할 로직을 작성합니다.
                 console.log("DELETE 요청이 실패했습니다.");
                 console.log(xhr.responseText);
-                alert("작성자만 삭제할 수 있습니다.");
-                location.replace("/");
+                Swal.fire({
+                    icon: 'error',                         // Alert 타입
+                    title: '작성자만 수정 가능합니다'        // Alert 제목
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "http://localhost:8080";
+                    }
+                });
             }
         });
     }
