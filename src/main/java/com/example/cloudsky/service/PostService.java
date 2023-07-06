@@ -68,7 +68,7 @@ public class PostService {
     }
 
     // 게시글 삭제
-    public ResponseEntity<String> deletePost(Long id, User user) {
+    public void deletePost(Long id, User user) {
         // postRepository에서 id로 해당 게시글 찾아오기
         Post post = findByPostId(id);
 
@@ -76,9 +76,6 @@ public class PostService {
         if (user.getUsername().equals(post.getUser().getUsername())) {
             // 맞으면 삭제하기
             postRepository.delete(post);
-            return ResponseEntity.ok("Success"); // 상태 코드 200 반환
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error"); // 상태 코드 400 반환
         }
     }
 
