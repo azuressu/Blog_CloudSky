@@ -179,6 +179,25 @@
       width: 60%;
       overflow: scroll;
       overflow-x: hidden;
+      margin-bottom: 10px;
+    }
+
+    .cards::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .cards::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    .cards::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #A7ECEE;
+    }
+
+    .cards::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
     }
 
     .bottom {
@@ -315,6 +334,7 @@
           <div class="left-content">
             <h3 class="card-title" th:text="${post.title}">title</h3>
             <p class="card-text" th:text="${post.username}">username</p>
+            <p class="card-text" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">시간</p>
           </div>
           <div class="right-content">
             <button th:onclick="|location.href='/dev/post/' + ${post.id}|" class="btn btn-primary">보러가기</button>

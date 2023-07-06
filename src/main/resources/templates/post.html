@@ -44,7 +44,7 @@
 
         .logoutbtn {
             width: 66%;
-            height: 15%;
+            height: 12%;
             margin: 10px auto 0px;
             align-items: center;
             display: flex;
@@ -186,6 +186,12 @@
             width: 40%;
         }
 
+        .subbody > div {
+            margin-right: 50px;
+            margin-top: 20px;
+            height:100%;
+        }
+
         button {
             padding: 8px 24px;
             /* 수정된 버튼의 크기*/
@@ -241,10 +247,10 @@
 
         .post {
             background-color: transparent;
+            height: 80%;
             width: 80%;
-            margin: 10px auto;
+            margin: auto;
             padding: 20px;
-            margin-top: 10px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -268,21 +274,44 @@
         }
 
         .cardarea {
-            margin-top: 6%;
+            margin-top: 5px;
+            margin-bottom: 20px;
             width: 90%;
             height: 85%;
             overflow: scroll;
+            overflow-x: hidden;
+        }
+
+        .mycards .card{
+            width: 90%;
+        }
+        .cardarea::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .cardarea::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .cardarea::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-color: #A7ECEE;
+        }
+
+        .cardarea::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
         }
 
         .mycards {
-            width: 100%;
+            width: 90%;
             min-height: 100px;
             padding: 20px;
-            margin-top: 10px;
+            margin: 5px auto 5px;
             border-radius: 20px;
             backdrop-filter: blur(5px);
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-right: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -543,7 +572,7 @@
     </div>
 
     <div class="subbody">
-        <div style="margin-right: 50px; height:100%;">
+        <div>
             <div class="mypost" id="post-box">
                 <div class="form-floating mb-3">
                     <input
@@ -567,7 +596,7 @@
                     <div class="card-body">
                         <p id="commentName_" th:text="${comment.username}"></p>
                         <p id="commentContent_" th:text="${comment.commentcontents}"></p>
-                        <p id="commentDate_" th:text="${comment.createdAt}" class="blockquote-footer">${date}</p>
+                        <p id="commentDate_" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}" class="blockquote-footer">${date}</p>
                     </div>
 
                     <div class="card-button" id = "card-button">
@@ -576,7 +605,7 @@
                     </div>
 
                     <div class="edit-form" style="display: none">
-                        <input id="message" th:placeholder="${comment.commentcontents}"></input>
+                        <input id="updatecomment_" th:placeholder="${comment.commentcontents}"/>
                         <button class="submit-btn" th:id="${comment.id}">저장</button>
                         <button class="cancel-btn">취소</button>
                     </div>
@@ -607,6 +636,7 @@
     const deleteBtns = document.querySelectorAll('.button_del');
     const updateBtns = document.querySelectorAll('.submit-btn');
     const calcenBtns = document.querySelectorAll('.cancel-btn');
+    const editform = document.querySelectorAll('.edit-form');
 
     // 댓글 삭제하기
     deleteBtns.forEach(button => {
@@ -735,6 +765,10 @@
     // 댓글 수정하기
     updateBtns.forEach(button => {
         button.addEventListener('click', function () {
+            const form = button.closest('.edit-form');
+            const updatecommentInput = form.querySelector('#updatecomment_');
+            const value = updatecommentInput.value;
+
             // id는 postid값임
             let url = window.location.href;
             let id = url.replace("http://localhost:8080/dev/post/", "");
@@ -743,13 +777,13 @@
             let commentId = button.id; // comment.id 값을 가져옴
             console.log(commentId);
 
-            let commentcontents = $('#message').val();
+            console.log(value);
 
             $.ajax({
                 type: "PUT",
                 url: `/dev/post/${id}/comment/${commentId}`,
                 contentType: "application/json",
-                data: JSON.stringify({commentcontents: commentcontents}),
+                data: JSON.stringify({commentcontents: value}),
                 success: function(response, status, xhr) {
 
                     // 요청이 성공한 경우 처리할 로직을 작성합니다.
@@ -795,6 +829,7 @@
 
         })
     });
+
 
     // 댓글 등록하기
     function save_comment() {
@@ -953,10 +988,10 @@
                 console.log(xhr.responseText);
                 Swal.fire({
                     icon: 'error',                         // Alert 타입
-                    title: '작성자만 수정 가능합니다'        // Alert 제목
+                    title: '작성자만 삭제 가능합니다'        // Alert 제목
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "http://localhost:8080";
+                        window.location.href = `http://localhost:8080/dev/post/${id}`;
                     }
                 });
             }

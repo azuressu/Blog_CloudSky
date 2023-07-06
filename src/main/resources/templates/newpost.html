@@ -386,7 +386,7 @@
             title: '수정 완료!'        // Alert 제목
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "http://localhost:8080";
+              window.location.href = `http://localhost:8080/dev/post/${id}`;
             }
           });
         } else {
@@ -396,7 +396,7 @@
             title: '작성자만 수정 가능합니다'        // Alert 제목
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "http://localhost:8080";
+              window.location.href = `http://localhost:8080/dev/post/${id}`;
             }
           });
         }

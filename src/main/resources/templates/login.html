@@ -288,7 +288,7 @@
                     // swal('로그인 실패!','warning');
                     Swal.fire({
                         icon: 'error',                         // Alert 타입
-                        title: '로그인 실패!'        // Alert 제목
+                        title: '회원이 아닙니다!'        // Alert 제목
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.href = host + '/dev/user/login-page?error'
