@@ -22,34 +22,6 @@
       color: #000000;
     }
 
-    .section .colour {
-      position: absolute;
-      filter: blur(150px);
-    }
-
-    .section .colour:nth-child(1) {
-      top: -350px;
-      width: 600px;
-      height: 600px;
-      background: #9AC5F4;
-    }
-
-    .section .colour:nth-child(2) {
-      left: 100px;
-      width: 500px;
-      height: 500px;
-      bottom: -150px;
-      background: #99DBF5;
-    }
-
-    .section .colour:nth-child(3) {
-      right: 100px;
-      bottom: 50px;
-      width: 300px;
-      height: 300px;
-      background: #A7ECEE;
-    }
-
     h1 {
       margin: 0;
     }
@@ -68,14 +40,25 @@
     }
 
     .logoutbtn {
-      width: 60%;
+      width: 66%;
       height: 15%;
       margin: 10px auto 0px;
-      align-items: center;
       display: flex;
-      /*justify-items: center;*/
-      /*text-align: right;*/
-      justify-content: space-between;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: left;
+    }
+
+    .logoutbtn > div:nth-child(1) {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .logoutbtn > div:nth-child(2) {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
     }
 
     .header{
@@ -170,36 +153,6 @@
       text-align: center;
     }
 
-    .row {
-      width: 100%;
-    }
-
-    .cards{
-      background-color: transparent;
-      width: 60%;
-      overflow: scroll;
-      overflow-x: hidden;
-      margin-bottom: 10px;
-    }
-
-    .cards::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .cards::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-
-    .cards::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #A7ECEE;
-    }
-
-    .cards::-webkit-scrollbar-button {
-      width: 0;
-      height: 0;
-    }
-
     .bottom {
       margin-top: 0;
       width: 100%;
@@ -207,10 +160,23 @@
       align-items: center;
       justify-self: center;
       height: 74.5%;
-      color: #000;
+      color: white;
       display: flex;
       flex-direction: column; /* 수정된 부분 */
     }
+
+    .post {
+      background-color: transparent;
+      width: 80%;
+      margin: 10px auto;
+      padding: 20px;
+      margin-top: 10px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
 
     button {
       padding: 8px 24px; /* 수정된 버튼의 크기 */
@@ -248,10 +214,41 @@
       width: 100%;
     }
 
-    .card{
+    .section .colour {
+      position: absolute;
+      filter: blur(150px);
+    }
+
+    .section .colour:nth-child(1) {
+      top: -350px;
+      width: 600px;
+      height: 600px;
+      background: #9AC5F4;
+    }
+
+    .section .colour:nth-child(2) {
+      left: 100px;
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      background: #99DBF5;
+    }
+
+    .section .colour:nth-child(3) {
+      right: 100px;
+      bottom: 50px;
+      width: 300px;
+      height: 300px;
+      background: #A7ECEE;
+    }
+
+    .row-6{
+      margin-top: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
       width: 100%;
-      min-height: 10px;
-      height: 85%;
+      min-height: 20px;
       border-radius: 20px;
       backdrop-filter: blur(5px);
       background: rgba(255, 255, 255, 0.1);
@@ -262,33 +259,89 @@
       overflow: hidden;
       color: #000
     }
+    .postbody{
+      width: 80%;
+      min-height: 450px;
+      height: 85%;
+      padding: 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.1);
+      /*box-shadow: 0 0px 25px rgba(0, 0, 0, 0.1);*/
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      /*overflow: hidden;*/
+      color: #000
+    }
 
-    .card-body {
-      padding: 15px;
+    .cards {
+      height: 60%;
+      background-color: transparent;
+      overflow: scroll;
+      overflow-x: hidden;
+      min-height: 350px;
+    }
+
+    .card {
+      margin-left:10px;
+    }
+
+    .cards::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .cards::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    .cards::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #A7ECEE;
+    }
+
+    .cards::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
+
+    .lines {
+      width: 100%;
+      height: 1px;
+      background-color: #000;
+      opacity: 0.2;
+      margin: 1px 1px 10px 1px;
+    }
+
+    .userinfo{
+      height: 20%;
+      color: #000;
+
+      display: flex;
+    }
+
+    .userinfo > div:nth-child(1) {
+      height: 100%;
+      width: 60%;
+    }
+
+    .userinfo > div:nth-child(2) {
+      height: 100%;
+      width: 40%;
+    }
+
+    .userinfos {
+
+    }
+
+    .userbutton {
       display: flex;
       justify-content: space-between;
-    }
-
-    .left-content {
-      flex-grow: 1;
-    }
-
-    .right-content {
-      display: flex;
-      float: right;
       align-items: center;
-      justify-content: center;
-      margin-left: 10px;
     }
 
-    .right-content > button {
-      height: 50%;
-    }
-
-    h3{
-      margin:0;
-    }
   </style>
+
 </head>
 <body>
 <div class="section">
@@ -303,97 +356,51 @@
   <div class="cloud cloud3"></div>
   <div class="cloud cloud4"></div>
   <div class="cloud cloud5"></div>
-  <div><h1 class="title1">Cloud Sky</h1></div>
-  <div><h4 class="title2"><span>☁</span> 환영합니다 <span>☁</span></h4></div>
+  <div><h1 class="title1" id="title1">Cloud Sky</h1></div>
+  <div><h4 class="title2" id="title2"><span>☁</span> 환영합니다 <span>☁</span></h4></div>
 </div>
 
 <div class = "line"> </div>
 
 <div class="bottom">
   <div class = "logoutbtn">
-
-    <div>
-      <button type="button" id="create-btn" th:onclick="|location.href='/dev/post'|"
-              class="btn btn-secondary btn-sm mb-3">글 등록</button>
-    </div>
     <div> <!--th:onclick="|location.href='/dev/post'|"   onclick="location.href='/dev/my-page'"-->
-      <button id="mypageButton" class="btn btn-secondary" onclick="goToMyPage()" style="display: none;">마이페이지</button>
+      <button id="mypageButton" class="btn btn-secondary" onclick="location.href='/'">메인 페이지</button>
     </div>
     <div>
-      <button id="loginButton" class="btn btn-secondary" onclick="location.href='/dev/user/login-page'" style="display: none;">로그인</button>
-      <button id="logoutButton" class="btn btn-secondary" onclick="location.href='/logout'" style="display: none;">로그아웃</button>
+      <button id="logoutbtn" href = "#"  onclick="location.href='/logout'">로그아웃</button>
     </div>
-
   </div>
-  <div class = "cards">
-    <div class="row" th:each="post : ${posts}">
-      <div class="card">
-        <div class="card-header" > <!--th:text="${post.id}"-->
+  <div class="post">
+    <div class="postbody">
+      <div class = "userinfo">
+        <div class = "userinfos">
+          <p th:text="|별명: ${users.realname}|">별명</p>
+          <p th:text="|한줄 소개: ${users.introduction}|">한줄소개</p>
         </div>
-        <div class="card-body">
-          <div class="left-content">
-            <h3 class="card-title" th:text="${post.title}">title</h3>
-            <p class="card-text" th:text="${post.username}">username</p>
-            <p class="card-text" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">시간</p>
-          </div>
-          <div class="right-content">
-            <button th:onclick="|location.href='/dev/post/' + ${post.id}|" class="btn btn-primary">보러가기</button>
-          </div>
+        <div class = "userbutton">
+          <!--          th:href="@{/dev/post/{id}(id=${posts.id})}"-->
+          <button th:onclick="|location.href='/dev/profile'|" class="btn btn-primary">회원 정보 수정</button>
+          <button th:onclick="|location.href='/dev/profile/password'|" class="btn btn-primary">비밀번호 수정</button>
         </div>
       </div>
-      <br>
-    </div>
+
+      <div class="lines">   </div>
+  <div class="cards">
+      <div class="row-6" th:each="post : ${posts}">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title" th:text="${post.title}"></h3>
+            <p class="card-text" th:text="|Posted on ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}|"></p>
+            <p class="card-text" th:text="${post.realname}"></p>
+            <!-- <button th:href="@{/dev/post/{id}(id=${posts.id})}" class="btn btn-primary">보러가기</button> -->
+          </div>
+        </div>
+        <br>
+      </div>
+  </div>
+  </div>
   </div>
 </div>
 </body>
-
-<script>
-  // 페이지 로드 시 JWT 토큰 여부를 확인하여 로그인/로그아웃 버튼을 표시하거나 감추는 함수
-  function toggleButtons() {
-    const loginButton = document.getElementById('loginButton'); // 로그인 버튼 요소를 가져옴
-    const logoutButton = document.getElementById('logoutButton'); // 로그아웃 버튼 요소를 가져옴
-    const mypageButton = document.getElementById('mypageButton'); // 마이페이지 버튼 요소를 가져옴
-
-    const jwtToken = getJwtFromCookie(); // Request 헤더에서 JWT 토큰을 가져옴
-
-    if (jwtToken) {
-      loginButton.style.display = 'none'; // JWT 토큰이 존재하면 로그인 버튼을 감춤
-      logoutButton.style.display = 'inline'; // JWT 토큰이 존재하면 로그아웃 버튼을 표시
-      mypageButton.style.display = 'inline';
-    } else {
-      loginButton.style.display = 'inline'; // JWT 토큰이 존재하지 않으면 로그인 버튼을 표시
-      logoutButton.style.display = 'none'; // JWT 토큰이 존재하지 않으면 로그아웃 버튼을 감춤
-      mypageButton.style.display = 'none';
-    }
-  }
-
-  function goToMyPage() {
-    const jwtToken = getJwtFromCookie();
-    if (jwtToken) {
-      location.href = '/dev/mypage';
-    } else {
-      location.href = '/dev/user/login-page';
-    }
-  }
-
-  function getJwtFromCookie() {
-    const cookieName = 'Authorization'; // JWT가 저장된 쿠키의 이름
-    const cookies = document.cookie.split(';');
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-
-      if (cookie.startsWith(`${cookieName}=`)) {
-        const jwtCookie = cookie.substring(cookieName.length + 1);
-        return jwtCookie;
-      }
-    }
-
-    return null; // JWT가 존재하지 않는 경우 null 반환
-  }
-
-  // 페이지 로드 시 toggleButtons 함수를 호출하여 버튼 초기 상태를 설정
-  toggleButtons();
-
-</script>
 </html>

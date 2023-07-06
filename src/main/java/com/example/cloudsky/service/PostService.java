@@ -8,6 +8,8 @@ import com.example.cloudsky.repository.PostRepository;
 import com.example.cloudsky.security.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class PostService {
 
     // 게시글 목록 조회
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
     // 선택한 게시글 하나만 가져오기
@@ -35,12 +37,7 @@ public class PostService {
         // 해당 post를 responseDto에 담아서 반환
         return new PostResponseDto(post);
     } // 선택한 게시글 조회
-
-    // 게시글 목록 조회
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-
+    
     // 게시글 생성하기
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
         // requestDto로부터 받은 게시글의 제목과 내용을 Post에 넣어줌
@@ -54,7 +51,7 @@ public class PostService {
     } // 게시글 생성
 
     // 게시글 수정
-    public PostResponseDto updatePost(Long id, PostRequestDto requestDto, User user) {
+    public ResponseEntity<String> updatePost(Long id, PostRequestDto requestDto, User user) {
         // postRepository에서 id로 해당 게시글 찾아오기
         Post post = findByPostId(id);
 
@@ -63,15 +60,15 @@ public class PostService {
             // requestDto로부터 받은 게시글의 제목과 내용으로 해당 post 내용 수정하기
             post.update(requestDto);
             // responseDto에 post 내용을 담아서 반환하기
-            return new PostResponseDto(post);
+            return ResponseEntity.ok("Success"); // 상태 코드 200 반환
         } else {
             // 해당 post의 작성자가 아니라면 null 반환하기
-            return null;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error"); // 상태 코드 400 반환
         }
     }
 
     // 게시글 삭제
-    public void deletePost(Long id, User user) {
+    public ResponseEntity<String> deletePost(Long id, User user) {
         // postRepository에서 id로 해당 게시글 찾아오기
         Post post = findByPostId(id);
 
@@ -79,6 +76,9 @@ public class PostService {
         if (user.getUsername().equals(post.getUser().getUsername())) {
             // 맞으면 삭제하기
             postRepository.delete(post);
+            return ResponseEntity.ok("Success"); // 상태 코드 200 반환
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error"); // 상태 코드 400 반환
         }
     }
 

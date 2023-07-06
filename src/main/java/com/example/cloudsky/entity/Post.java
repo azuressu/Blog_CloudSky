@@ -9,6 +9,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -25,12 +28,16 @@ public class Post extends Timestamped{
     private String title;
     @Column(name = "content", nullable = false)
     private String content;
+
     @ColumnDefault("0")
     @Column(name = "like_count", nullable = false)
     private Integer likeCount;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private List<Comment> commentList = new ArrayList<>();
 
     public Post(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
@@ -41,6 +48,11 @@ public class Post extends Timestamped{
     public void update(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+    }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
+        comment.setPost(this);
     }
 
 }
