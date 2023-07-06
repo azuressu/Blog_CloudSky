@@ -51,14 +51,13 @@ public class UserService {
 
     // 프로필 수정
     @Transactional
-    public ResponseEntity<String> updateProfile(User user, ProfileRequestDto profileRequestDto) {
+    public void updateProfile(User user, ProfileRequestDto profileRequestDto) {
         log.info("회원정보 수정");
         user.setRealname(profileRequestDto.getRealname());
         user.setIntroduction(profileRequestDto.getIntroduction());
         log.info("회원정보 수정 시도");
         userRepository.save(user);
         log.info("회원정보 수정 완료");
-        return ResponseEntity.ok("Success"); // 상태 코드 200 반환
     }
 
     // 비밀번호 변경

@@ -5,6 +5,7 @@ import com.example.cloudsky.dto.PasswordRequestDto;
 import com.example.cloudsky.dto.ProfileRequestDto;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
 
@@ -23,26 +27,17 @@ public class ProfileController {
 
     private final UserService userService;
 
-    // 프로필 조회
-//    @GetMapping("/my-page")
-//    public String getMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-//        ProfileResponseDto profileResponseDto = userService.getMyPage(userDetails.getUser());
-//
-//        // 속성을 담을 Map 객체 생성
-//        Map<String, Object> attributes = new HashMap<>();
-//        attributes.put("users", profileResponseDto);
-//        attributes.put("post", profileResponseDto.getPosts());
-//        model.addAllAttributes(attributes);
-//
-//        return "mypage";
-//    }
-
     // 프로필 수정
     @Transactional
     @PutMapping("/dev/profile")
     public ResponseEntity<String> updateProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody ProfileRequestDto profileRequestDto) {
         log.info("프로필 수정 시도");
-        return userService.updateProfile(userDetails.getUser(), profileRequestDto);
+        userService.updateProfile(userDetails.getUser(), profileRequestDto);
+        log.info("프로필 수정 완료 후에 상태값 확인");
+        URI redirectUri = URI.create("/dev/mypage"); // 리다이렉션할 URL
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                .location(redirectUri)
+                .build();
     }
 
     // 비밀번호 확인
