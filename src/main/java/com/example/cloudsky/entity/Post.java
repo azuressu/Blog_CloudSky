@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "post")
 public class Post extends Timestamped{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -32,6 +33,7 @@ public class Post extends Timestamped{
     @ColumnDefault("0")
     @Column(name = "like_count", nullable = false)
     private Integer likeCount;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -1,8 +1,10 @@
 package com.example.cloudsky.controller;
 
+import com.example.cloudsky.dto.CommentResponseDto;
 import com.example.cloudsky.dto.PostRequestDto;
 import com.example.cloudsky.dto.PostResponseDto;
 import com.example.cloudsky.dto.ProfileResponseDto;
+import com.example.cloudsky.entity.Commentlike;
 import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.LikeService;
@@ -44,12 +46,17 @@ public class PostViewController {
     @GetMapping("/dev/post/{id}")
     public String getOnePost(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Post post = postService.findByPostId(id);
+        // 게시글 데이터
         PostResponseDto postResponseDto = new PostResponseDto(post);
         model.addAttribute("post", postResponseDto);
-        // 좋아요 어떻게 식별하지 ?
+        // 게시글 좋아요 데이터
         Boolean like = likeService.likefind(id, userDetails);
         model.addAttribute("like", like);
-        model.addAttribute("comments", postResponseDto.getCommentList());
+        // 댓글 좋아요 데이터 - boolean 타입의 map으로 넘겨받아야 하나 ? map으로 넘겨받 .. 하
+
+        List<CommentResponseDto> commentlist = likeService.commentlikefind(id, userDetails, postResponseDto.getCommentList());
+        // 댓글 보여주기
+        model.addAttribute("comments", commentlist);
 
         return "post"; // post.html 뷰 조회
     }

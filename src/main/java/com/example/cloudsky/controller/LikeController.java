@@ -23,17 +23,24 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping("/{postId}") // ResponseEntity<ApiResponseDto>
-    public ResponseEntity<String>  denote(@PathVariable(name = "postId") Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> denote(@PathVariable(name = "postId") Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("좋아요 시도");
         return likeService.denote(postId, userDetails);
-//        return ResponseEntity.status(201).body(new ApiResponseDto("좋아요 성공", HttpStatus.CREATED.value()));
-//        return new RedirectView("/");
     }
 
     @DeleteMapping("/{postId}")
     public void cancel(@PathVariable(name = "postId") Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         likeService.cancel(postId, userDetails);
-//        return ResponseEntity.status(201).body(new ApiResponseDto("좋아요 취소", HttpStatus.CREATED.value()));
-//        return new RedirectView("/");
+    }
+
+    @PostMapping("/{postId}/{commentId}")
+    public ResponseEntity<String> addLike (@PathVariable(name = "postId") Long postId, @PathVariable(name = "commentId") Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("댓글 좋아요 시도");
+        return likeService.addLike(postId, commentId, userDetails);
+    }
+
+    @DeleteMapping("/{postId}/{commentId}")
+    public void cancleLike(@PathVariable(name = "postId") Long postId, @PathVariable(name = "commentId") Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        likeService.cancleLike(postId, commentId, userDetails);
     }
 }
